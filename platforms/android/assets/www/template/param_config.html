@@ -1,0 +1,26 @@
+<div class="list">
+	<label class="item item-input">
+		<div class="input-label">Vertical Max Power: {{param_config.vertical_max_power}}</div>
+		<div class="range range-positive">
+			<i>0</i>
+			<input name="vertical_max_power" ng-model="param_config.vertical_max_power" min="0" max="255" type="range" class="text" value="180">
+			<i>255</i>
+		</div>
+	</label>
+	<label class="item item-input">	
+		<div class="input-label">Horizontal Max Power: {{param_config.horizontal_max_power}}</div>
+		<div class="range range-positive">
+			<i>0</i>
+			<input name="horizontal_max_power" ng-model="param_config.horizontal_max_power" min="0" max="255" type="range" class="text" value="120">
+			<i>255</i>
+		</div>
+	</label>
+	<label class="item item-input">
+		<div class="input-label">Horizontal Max Power (Side): {{param_config.horizontal_max_power_side}}</div>
+		<div class="range range-positive">
+			<i>0</i>
+			<input name="horizontal_max_power_side" ng-model="param_config.horizontal_max_power_side" min="0" max="255" type="range" class="text" value="255">
+			<i>255</i>
+		</div>
+	</label>
+</div>

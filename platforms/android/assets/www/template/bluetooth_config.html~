@@ -1,0 +1,7 @@
+<div class="list">
+	<label class="item item-input item-select">
+		<select ng-disabled="!state.hasCandidateDevice" ng-model="selectedDevice.address">
+			<option ng-repeat="device in deviceList" value="{{device.address}}">{{device.name}}</option>
+		</select>
+	</label>
+</div>
