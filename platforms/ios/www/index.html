@@ -28,33 +28,51 @@
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/virtualjoystick/virtualjoystick.js"></script>
     <script src="cordova.js"></script> 
     <script src="lib/ng-cordova-bluetoothle/ng-cordova-bluetoothle.js"></script>
     <!-- your app's js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
+
     <script src="js/app.js"></script>
   </head>
   <body ng-app="starter" ng-controller="MainController">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
+	<button ng-click="showBluetoothPopup()" class="button button-icon icon ion-bluetooth icon-right"></button>
+	<button ng-click="showParamConfig()" class="button button-icon icon ion-gear-b icon-left"></button>
         <h1 class="title">Control Panel</h1>
-      </ion-header-bar>
-      <ion-content>
+	</ion-header-bar>
 
-    	<ion-list>
-    		<ion-item>
-			<ion-label>
-				Devices
-			</ion-label>
-			<ion-select>
-				<option ng-repeat="device in devices">{{device}}</option>
-			</ion-select>
-		</ion-item>
-		<button class="button button-dark button-full" color="secondary" ng-click="getDevice()">Refresh</button>
-		<button class="button button-dark button-full" color="primary">Connect</button>
-		<p>{{msg}}</p>
-    	</ion-list>
-      </ion-content>
+	<ion-content scroll="false" class="has-header" has-header="true">
+	<!--
+		<div class="row" style="max-height:30%">
+			<div class="col">
+				<canvas tc-chartjs-bar chart-data="data"></canvas>
+			</div>
+		</div>
+	-->
+		<div class="row row-bottom">
+			<div class="col">
+				
+				<span ng-repeat="motor in taskControl">
+					{{(motor.power * (motor.reverse?-1:1) | number : 2) + '\t'}}
+				</span>
+				
+				<div id="vertical-controller"></div>
+			</div>
+			<!--
+			<div class="col col-33">
+			</div>
+			<div class="col col-33" style="position:relative;">
+				<div id="horizontal-controller"></div>
+			</div>
+			-->
+		</div>
+	</ion-content>
     </ion-pane>
   </body>
 </html>

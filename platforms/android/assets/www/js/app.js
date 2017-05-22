@@ -59,14 +59,14 @@ angular.module('starter', ['ionic','ngCordova','ngCordovaBluetoothLE','chart.js'
 		{
 			vertical_max_power : 180,
 			horizontal_max_power : 120,
-			horizontal_max_power_side : 255
+			horizontal_max_power_side : 300
 		}
 
 		$scope.param_config = 
 		{
 			vertical_max_power : 180,
 			horizontal_max_power : 120,
-			horizontal_max_power_side : 255
+			horizontal_max_power_side : 300
 		}
 		//Chart.js data
 
@@ -253,19 +253,20 @@ angular.module('starter', ['ionic','ngCordova','ngCordovaBluetoothLE','chart.js'
 			//dx = $scope.v_joystick.deltaX();
 			//var max_power = 255;
 			var v_dy = $scope.v_joystick.deltaY();
+			var dir = false;
 			//console.log("v_dy:" + v_dy);
-			if (v_dy > 0)
+			if (v_dy < 0)
 			{
 				v_dy = -v_dy;
-				$scope.taskControl._4.reverse = true;
-				$scope.taskControl._5.reverse = true;
-				$scope.taskControl._6.reverse = true;
+				$scope.taskControl._4.reverse = dir;
+				$scope.taskControl._5.reverse = dir;
+				$scope.taskControl._6.reverse = dir;
 			}else
 			{
 
-				$scope.taskControl._4.reverse = false;
-				$scope.taskControl._5.reverse = false;
-				$scope.taskControl._6.reverse = false;
+				$scope.taskControl._4.reverse = !dir;
+				$scope.taskControl._5.reverse = !dir;
+				$scope.taskControl._6.reverse = !dir;
 			}
 			
 			$scope.taskControl._4.power = v_dy/50.0 * $scope.param_config.vertical_max_power;
@@ -288,6 +289,7 @@ angular.module('starter', ['ionic','ngCordova','ngCordovaBluetoothLE','chart.js'
 			// first motor: motor 1
 			$scope.taskControl._1.power = Math.abs(ny) * $scope.param_config.horizontal_max_power;
 			$scope.taskControl._1.reverse = (ny > 0);
+			$scope.taskControl._1.reverse = !($scope.taskControl._1.reverse);
 			// second motor: motor 2
 			// axis @ 120 deg. normalized...
 			var b_x = Math.sqrt(3)/4.0;
@@ -297,13 +299,17 @@ angular.module('starter', ['ionic','ngCordova','ngCordovaBluetoothLE','chart.js'
 			// power = magnitute of projection on the axis @ 120 deg.
 			var proj_mag = b_x * nx + b_y * ny;
 			$scope.taskControl._2.power = Math.abs(proj_mag) / max_proj_len * $scope.param_config.horizontal_max_power_side;
+			// TODO: tune me
 			$scope.taskControl._2.reverse = (proj_mag < 0);
+			//$scope.taskControl._2.reverse = (proj_mag > 0);
+			
 			// vector for representing the axis towards the direction of the third motor...
 			var c_x = -b_x;
 			var c_y = b_y;
 			proj_mag = c_x * nx + c_y * ny;
 			$scope.taskControl._3.power = Math.abs(proj_mag) / max_proj_len * ($scope.param_config.horizontal_max_power_side);
 			$scope.taskControl._3.reverse = (proj_mag < 0);
+			//$scope.taskControl._3.reverse = (proj_mag > 0);
 
 		//	console.log("h_dx:" + h_dx + ",h_dy:" + h_dy);
 			$scope.$digest();
